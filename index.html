@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>App Home</title>
+<meta name="description" content="One home screen icon for all of the score pads. Opens each app full-screen.">
+<meta name="theme-color" content="#101828">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="App Home">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<style>
+/* Layout: a short heading, then one big full-width button per app, stacked for one-thumb use. */
+:root {
+  --bg: #101828;
+  --surface: #1a2438;
+  --surface-press: #233050;
+  --ink: #f4f6fb;
+  --muted: #9aa6bf;
+  --line: #2b3754;
+  --radius: 22px;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font: 17px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  padding: calc(env(safe-area-inset-top) + 28px) calc(env(safe-area-inset-right) + 20px) calc(env(safe-area-inset-bottom) + 28px) calc(env(safe-area-inset-left) + 20px);
+  -webkit-tap-highlight-color: transparent;
+}
+header { margin: 0 0 24px; }
+h1 { font-size: 30px; line-height: 1.1; margin: 0 0 6px; letter-spacing: -0.01em; }
+header p { margin: 0; color: var(--muted); font-size: 15px; }
+.apps { list-style: none; margin: 0 auto; padding: 0; display: grid; gap: 14px; max-width: 480px; }
+.app {
+  display: flex; align-items: center; gap: 16px;
+  min-height: 92px; padding: 16px 18px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  color: inherit; text-decoration: none;
+  transition: transform 80ms ease, background 80ms ease;
+}
+.app:active { transform: scale(0.985); background: var(--surface-press); }
+.app:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+.badge {
+  flex: none; width: 60px; height: 60px; border-radius: 16px;
+  display: grid; place-items: center; background: var(--c, #555);
+}
+.badge svg { width: 36px; height: 36px; display: block; }
+.text { min-width: 0; flex: 1; }
+.name { display: block; font-size: 20px; font-weight: 700; line-height: 1.2; }
+.desc { display: block; color: var(--muted); font-size: 14px; margin-top: 3px; }
+.chev { flex: none; width: 22px; height: 22px; color: var(--muted); }
+footer { margin-top: 32px; text-align: center; color: var(--muted); font-size: 13px; }
+footer p { margin: 0; }
+@media (prefers-color-scheme: light) {
+  :root { --bg: #eef1f6; --surface: #ffffff; --surface-press: #e3e8f2; --ink: #131a2b; --muted: #5d6882; --line: #d5dbe8; }
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>App Home</h1>
+  <p>Pick an app. It opens full-screen here. Use your phone's back gesture to return.</p>
+</header>
+
+<ul class="apps" id="apps"></ul>
+
+<footer><p>Works offline once installed. Scores are saved on this phone.</p></footer>
+
+<script>
+// Add an app here: one entry per repo published on this GitHub Pages site.
+// href is relative to /app-home/, so "../may-i/" resolves to /may-i/.
+var APPS = [
+  {
+    name: 'May I',
+    desc: 'Score keeper for the card game. Seven rounds, lowest total wins.',
+    href: '../may-i/',
+    colour: '#1b5e3a',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="3" width="11" height="16" rx="2" transform="rotate(12 12.5 11)"/><rect x="4" y="5" width="11" height="16" rx="2" fill="#1b5e3a"/><path d="M9.5 10.2c-.9-1.5-3-.7-2.4 1 .4 1.2 1.9 2.2 2.4 2.8.5-.6 2-1.6 2.4-2.8.6-1.7-1.5-2.5-2.4-1z" fill="#fff" stroke="none"/></svg>'
+  },
+  {
+    name: 'Putt Card',
+    desc: 'Minigolf scorecard for any number of players. One tap per score.',
+    href: '../putt-card/',
+    colour: '#1C7A43',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 20V4"/><path d="M10 4l8 3-8 3z" fill="#fff"/><path d="M4 20c2-2 4-2 6-2s4 0 6 2"/><circle cx="5.5" cy="15.5" r="1.4" fill="#fff" stroke="none"/></svg>'
+  },
+  {
+    name: 'Yahtzee',
+    desc: 'Score pad for Yahtzee played with real dice.',
+    href: '../yahtzee-score-pad/',
+    colour: '#c9282d',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="3.5"/><g fill="#fff" stroke="none"><circle cx="8" cy="8" r="1.6"/><circle cx="16" cy="8" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="8" cy="16" r="1.6"/><circle cx="16" cy="16" r="1.6"/></g></svg>'
+  }
+];
+
+(function render() {
+  var list = document.getElementById('apps');
+  var chevron = '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';
+  list.innerHTML = APPS.map(function (a) {
+    return '<li><a class="app" href="' + a.href + '">' +
+      '<span class="badge" style="--c:' + a.colour + '">' + a.icon + '</span>' +
+      '<span class="text"><span class="name">' + a.name + '</span><span class="desc">' + a.desc + '</span></span>' +
+      chevron + '</a></li>';
+  }).join('');
+})();
+
+if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+  window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
+}
+</script>
+</body>
+</html>

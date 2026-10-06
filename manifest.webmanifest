@@ -1,0 +1,20 @@
+{
+  "id": "/app-home/",
+  "name": "App Home",
+  "short_name": "App Home",
+  "description": "One home screen icon for all of the score pads. Opens each app full-screen.",
+  "start_url": "/app-home/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#101828",
+  "theme_color": "#101828",
+  "lang": "en-AU",
+  "categories": ["games", "utilities"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
